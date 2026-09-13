@@ -287,3 +287,15 @@ A primeira renderização baixa o Chrome Headless Shell.
 | procurar uma API na documentação | `remotion-docs/SKILL.md` |
 | mapas, multimídia, SaaS | `remotion-maps`, `remotion-multimedia`, `remotion-saas` |
 | atualizar o Remotion | `remotion-upgrade/SKILL.md` |
+
+## 14. Deploy no VPS (Coolify)
+
+Guia completo em [docs/deploy-coolify.md](docs/deploy-coolify.md). Resumo:
+
+- `Dockerfile` único; `SERVICE=studio` sobe o Studio com senha (Caddy, `STUDIO_USER`/`STUDIO_PASSWORD`),
+  `SERVICE=api` sobe a API de render (`server/index.ts`, `RENDER_API_KEY`, mp4 em `/app/renders`).
+- API: `POST /renders` (`compositionId`, `inputProps?`), `GET /renders/:id`, `GET /renders/:id/download`,
+  `DELETE /renders/:id`, `GET /compositions`, `GET /health`. Fila serial, limpeza por `RENDER_TTL_HOURS`.
+- Localmente: `RENDER_API_KEY=teste npm run api` (faz o bundle na hora) ou `docker build -t videos:local .`.
+- Funções puras da API (`server/validate.ts`, `auth.ts`, `retention.ts`) têm testes; a fila e as rotas
+  são verificadas com um render real via `curl`.

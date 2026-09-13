@@ -11,7 +11,9 @@ npm run new-video -- meu-video --title "Meu vídeo"
 npm run voiceover -- meu-video            # narração (voz do macOS; ElevenLabs com .env)
 npm run transcribe -- public/meu-video/voiceover   # legendas
 npm run lint && npm test && npm run smoke
+RENDER_API_KEY=teste npm run api          # API de render local em http://localhost:3000
 ```
 
 Convenções, estrutura e receitas de animação: [AGENTS.md](AGENTS.md).
+Deploy no VPS com Coolify (Studio com senha + API de render): [docs/deploy-coolify.md](docs/deploy-coolify.md).
 Design e plano: `docs/superpowers/`.
