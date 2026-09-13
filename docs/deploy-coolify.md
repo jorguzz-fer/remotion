@@ -93,6 +93,10 @@ espera consultando `statusUrl` a cada 5 s até `status = completed`, e por fim o
 - `502` no Studio logo depois do deploy: o Studio interno ainda está compilando (30 a 60 s).
 - Container reiniciando ou render morrendo sem erro: memória. Suba o limite ou defina
   `RENDER_CONCURRENCY=1`.
+- Studio abre preto e o console mostra `$RefreshSig$ is not defined`: alguém definiu `NODE_ENV=production`
+  na aplicação do Studio. Remova a variável; o entrypoint já cuida do `NODE_ENV` de cada modo.
+- Studio mostra "Legendas não encontradas" e erros de `fetch` mencionando credenciais: a URL foi aberta
+  com `usuario:senha@` embutidos. Abra o domínio sem credenciais e informe usuário e senha no diálogo.
 - Logs: Coolify → aplicação → *Logs*. No servidor, `docker logs <container>`.
 - Testar a imagem localmente antes do deploy:
 
