@@ -129,7 +129,8 @@ direção de layout, tamanho de fonte e posição.
 
 `<SafeArea>` é um `AbsoluteFill` com padding proporcional à largura: 80px laterais e 100px
 em cima e embaixo para 1080 de largura, escalados linearmente pela largura real
-(1920 de largura dá 142px e 178px). Aceita `style` para sobrescrever alinhamento e `name` para o Studio.
+(1920 de largura dá 142px e 178px). Aceita `style` para sobrescrever alinhamento, `name` para o Studio e `captionSpace`, que reserva mais 20% da altura
+embaixo para as legendas não cobrirem o conteúdo.
 
 `<SafeArea>` também define `fontSize` igual a 4,1% da largura (44px em 1080, 79px em 1920).
 As cenas escrevem tamanhos de texto em `em`, como literais: `"2em"` para títulos (88px em 1080)
@@ -174,7 +175,7 @@ Comportamento:
   com `watchStaticFile` e recarrega quando o script de transcrição o reescreve.
 - Agrupa com `createTikTokStyleCaptions` e renderiza uma `<Sequence>` por página, com
   `CaptionPage` destacando a palavra falada. `whiteSpace: "pre"` preserva os espaços.
-- Tamanho da fonte padrão: 5,5% da largura da composition, fonte `displayFontFamily`, com `textShadow`
+- Tamanho da fonte padrão: 5,5% do menor lado da composition, fonte `displayFontFamily`, com `textShadow`
   preto em quatro direções para legibilidade sobre qualquer fundo.
 - Arquivo ausente: no Studio, mostra uma faixa vermelha com o caminho esperado, sem quebrar a
   pré-visualização. Durante render (`getRemotionEnvironment().isRendering`), chama `cancelRender`
@@ -240,8 +241,9 @@ Expostos no `package.json`:
 
 - Lê `public/<slug>/voiceover/roteiro.json` com o formato
   `{"voice": "Luciana", "scenes": {"intro": "texto...", "dados": "texto..."}}`.
-- Provider `macos` (padrão): roda `say -v <voice> -o temp/<cena>.aiff` e converte para mp3 com
-  `npx remotion ffmpeg`. Sem custo, sem chave, só funciona no macOS.
+- Provider `macos` (padrão): roda `say -v <voice> -o temp/<cena>.wav --file-format=WAVE --data-format=LEI16@22050`
+  e converte para mp3 com o ffmpeg do Remotion (que não lê o AIFF-C padrão do `say`). Sem custo, sem chave,
+  só funciona no macOS.
 - Provider `elevenlabs` (usado automaticamente se `ELEVENLABS_API_KEY` estiver definido e o provider
   não for forçado): chama `POST /v1/text-to-speech/<voiceId>` com `eleven_multilingual_v2` e grava o mp3.
   O `voice` no roteiro passa a ser o voiceId. A chave vem de `.env` via `node --env-file-if-exists=.env`.

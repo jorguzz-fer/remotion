@@ -1,0 +1,102 @@
+import { Circle } from "@remotion/shapes";
+import {
+  AbsoluteFill,
+  Easing,
+  Interactive,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { SafeArea } from "../../../lib/layout/SafeArea";
+import { displayFontFamily } from "../../../theme/fonts";
+
+export type IntroProps = {
+  title: string;
+  subtitle: string;
+  accentColor: string;
+};
+
+export const Intro: React.FC<IntroProps> = ({ title, subtitle, accentColor }) => {
+  const frame = useCurrentFrame();
+  const { fps, width } = useVideoConfig();
+
+  return (
+    <AbsoluteFill name="Intro" style={{ backgroundColor: "#0B1020", overflow: "hidden" }}>
+      <Interactive.Div
+        name="Mancha de cor"
+        style={{
+          position: "absolute",
+          left: "-10%",
+          top: "-10%",
+          opacity: 0.55,
+          filter: "blur(90px)",
+          translate: interpolate(frame, [0, 4 * fps], ["0px 0px", "140px 90px"], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: Easing.inOut(Easing.quad),
+          }),
+        }}
+      >
+        <Circle radius={width * 0.32} fill={accentColor} />
+      </Interactive.Div>
+      <SafeArea style={{ justifyContent: "center", alignItems: "flex-start", gap: "0.6em" }}>
+        <Interactive.H1
+          name="Título"
+          style={{
+            margin: 0,
+            fontFamily: displayFontFamily,
+            fontSize: "2.2em",
+            fontWeight: 800,
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            opacity: interpolate(frame, [0, 0.5 * fps], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+            scale: interpolate(frame, [0, 1 * fps], [0.85, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+              easing: Easing.spring({ damping: 200 }),
+              output: "perceptual-scale",
+            }),
+          }}
+        >
+          {title}
+        </Interactive.H1>
+        <Interactive.P
+          name="Subtítulo"
+          style={{
+            margin: 0,
+            fontSize: "1em",
+            lineHeight: 1.3,
+            color: "#9AA4B8",
+            maxWidth: "22em",
+            opacity: interpolate(frame, [0.4 * fps, 1 * fps], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+            translate: interpolate(frame, [0.4 * fps, 1.2 * fps], ["0px 40px", "0px 0px"], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+              easing: Easing.out(Easing.cubic),
+            }),
+          }}
+        >
+          {subtitle}
+        </Interactive.P>
+      </SafeArea>
+      {/*
+        Narração e legendas. Depois de rodar
+          npm run voiceover -- __slug__
+          npm run transcribe -- public/__slug__/voiceover
+        adicione os imports e os elementos abaixo:
+          import { Audio } from "@remotion/media";
+          import { staticFile } from "remotion";
+          import { Captions } from "../../../lib/media/Captions";
+          <Audio name="Narração" src={staticFile("__slug__/voiceover/intro.mp3")} />
+          <Captions src={staticFile("__slug__/voiceover/intro.json")} />
+        e acrescente a prop captionSpace ao <SafeArea> para a legenda não cobrir o conteúdo.
+      */}
+    </AbsoluteFill>
+  );
+};

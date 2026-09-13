@@ -1,0 +1,8 @@
+{
+  "voice": "Luciana",
+  "scenes": {
+    "intro": "Vídeos animados feitos em código, com React e Remotion.",
+    "dados": "Em cinco meses, a produção cresceu de doze para quarenta e quatro vídeos por mês. Cento e trinta no total.",
+    "outro": "Comece hoje. Abra o Studio e edite a primeira cena."
+  }
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "text": "Em",
+    "startMs": 0,
+    "endMs": 170,
+    "timestampMs": 180,
+    "confidence": 0.867487
+  },
+  {
+    "text": " cinco",
+    "startMs": 170,
+    "endMs": 610,
+    "timestampMs": 660,
+    "confidence": 0.853388
+  },
+  {
+    "text": " meses,",
+    "startMs": 610,
+    "endMs": 1300,
+    "timestampMs": 1140,
+    "confidence": 0.999203
+  },
+  {
+    "text": " a",
+    "startMs": 1300,
+    "endMs": 1310,
+    "timestampMs": 1660,
+    "confidence": 0.998607
+  },
+  {
+    "text": " produção",
+    "startMs": 1310,
+    "endMs": 2180,
+    "timestampMs": 1940,
+    "confidence": 0.998454
+  },
+  {
+    "text": " cresceu",
+    "startMs": 2180,
+    "endMs": 2820,
+    "timestampMs": 2440,
+    "confidence": 0.790463
+  },
+  {
+    "text": " de",
+    "startMs": 2820,
+    "endMs": 2960,
+    "timestampMs": 2820,
+    "confidence": 0.998711
+  },
+  {
+    "text": " 12",
+    "startMs": 2960,
+    "endMs": 3560,
+    "timestampMs": 3180,
+    "confidence": 0.96221
+  },
+  {
+    "text": " para",
+    "startMs": 3560,
+    "endMs": 3840,
+    "timestampMs": 3540,
+    "confidence": 0.980522
+  },
+  {
+    "text": " 44",
+    "startMs": 3840,
+    "endMs": 4410,
+    "timestampMs": 4460,
+    "confidence": 0.994628
+  },
+  {
+    "text": " vídeos",
+    "startMs": 4410,
+    "endMs": 5070,
+    "timestampMs": 4980,
+    "confidence": 0.979299
+  },
+  {
+    "text": " por",
+    "startMs": 5070,
+    "endMs": 5250,
+    "timestampMs": 5240,
+    "confidence": 0.994679
+  },
+  {
+    "text": " mês;",
+    "startMs": 5250,
+    "endMs": 6080,
+    "timestampMs": 5720,
+    "confidence": 0.99962
+  },
+  {
+    "text": " 130",
+    "startMs": 6080,
+    "endMs": 6510,
+    "timestampMs": 6760,
+    "confidence": 0.957848
+  },
+  {
+    "text": " no",
+    "startMs": 6510,
+    "endMs": 6640,
+    "timestampMs": 7040,
+    "confidence": 0.992562
+  },
+  {
+    "text": " total.",
+    "startMs": 6640,
+    "endMs": 7460,
+    "timestampMs": 7440,
+    "confidence": 0.997044
+  }
+]
