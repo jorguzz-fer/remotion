@@ -21,13 +21,14 @@ COPY tsconfig.json remotion.config.ts ./
 COPY src ./src
 COPY public ./public
 COPY server ./server
-COPY docker ./docker
 
 # Chrome Headless Shell dentro da imagem e bundle do projeto para a API.
 RUN npx remotion browser ensure
 RUN npx remotion bundle
 
-ENV NODE_ENV=production
+# NODE_ENV fica por conta do entrypoint: production só na API; o Studio precisa do bundle de
+# desenvolvimento (React Refresh) e quebra com NODE_ENV=production.
+COPY docker ./docker
 ENV PORT=3000
 ENV RENDERS_DIR=/app/renders
 ENV REMOTION_SERVE_URL=/app/build
