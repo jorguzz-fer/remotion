@@ -1,3 +1,5 @@
+import { Audio } from "@remotion/media";
+import { whoosh } from "@remotion/sfx";
 import { linearTiming, TransitionSeries } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { slide } from "@remotion/transitions/slide";
@@ -10,8 +12,9 @@ import { exemploSchema } from "./schema";
 
 type ExemploProps = z.infer<typeof exemploSchema>;
 
-// Duração total: Intro 120 + Dados 240 + Outro 120 = 480 frames,
-// menos duas transições de 15 frames = 450 frames (15 s a 30 fps).
+// Duração total: Intro 150 + Dados 270 + Outro 150 = 570 frames,
+// menos duas transições de 15 frames = 540 frames (18 s a 30 fps).
+// Os whooshes começam no início de cada transição: 150 - 15 = 135 e 150 + 270 - 30 = 390.
 export const Exemplo: React.FC<ExemploProps> = ({
   title,
   subtitle,
@@ -20,25 +23,41 @@ export const Exemplo: React.FC<ExemploProps> = ({
   data,
 }) => {
   return (
-    <TransitionSeries>
-      <TransitionSeries.Sequence name="Intro" durationInFrames={120}>
-        <Intro title={title} subtitle={subtitle} accentColor={accentColor} />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition
-        presentation={fade()}
-        timing={linearTiming({ durationInFrames: 15 })}
+    <>
+      <TransitionSeries>
+        <TransitionSeries.Sequence name="Intro" durationInFrames={150}>
+          <Intro title={title} subtitle={subtitle} accentColor={accentColor} />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: 15 })}
+        />
+        <TransitionSeries.Sequence name="Dados" durationInFrames={270}>
+          <Dados accentColor={accentColor} data={data} />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={slide({ direction: "from-right" })}
+          timing={linearTiming({ durationInFrames: 15 })}
+        />
+        <TransitionSeries.Sequence name="Outro" durationInFrames={150}>
+          <Outro cta={cta} accentColor={accentColor} />
+        </TransitionSeries.Sequence>
+      </TransitionSeries>
+      <Audio
+        name="Whoosh 1"
+        src={whoosh}
+        from={135}
+        durationInFrames={30}
+        volume={0.5}
       />
-      <TransitionSeries.Sequence name="Dados" durationInFrames={240}>
-        <Dados accentColor={accentColor} data={data} />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition
-        presentation={slide({ direction: "from-right" })}
-        timing={linearTiming({ durationInFrames: 15 })}
+      <Audio
+        name="Whoosh 2"
+        src={whoosh}
+        from={390}
+        durationInFrames={30}
+        volume={0.5}
       />
-      <TransitionSeries.Sequence name="Outro" durationInFrames={120}>
-        <Outro cta={cta} accentColor={accentColor} />
-      </TransitionSeries.Sequence>
-    </TransitionSeries>
+    </>
   );
 };
 
@@ -54,7 +73,7 @@ export const ExemploCompositions: React.FC = () => {
         width={1080}
         height={1920}
         fps={30}
-        durationInFrames={450}
+        durationInFrames={540}
         defaultProps={{
           title: "Vídeos em código",
           subtitle:
@@ -77,7 +96,7 @@ export const ExemploCompositions: React.FC = () => {
         width={1920}
         height={1080}
         fps={30}
-        durationInFrames={450}
+        durationInFrames={540}
         defaultProps={{
           title: "Vídeos em código",
           subtitle:
@@ -100,7 +119,7 @@ export const ExemploCompositions: React.FC = () => {
         width={1080}
         height={1080}
         fps={30}
-        durationInFrames={450}
+        durationInFrames={540}
         defaultProps={{
           title: "Vídeos em código",
           subtitle:
@@ -123,7 +142,7 @@ export const ExemploCompositions: React.FC = () => {
           width={1080}
           height={1920}
           fps={30}
-          durationInFrames={120}
+          durationInFrames={150}
           defaultProps={{
             title: "Vídeos em código",
             subtitle:
@@ -137,7 +156,7 @@ export const ExemploCompositions: React.FC = () => {
           width={1080}
           height={1920}
           fps={30}
-          durationInFrames={240}
+          durationInFrames={270}
           defaultProps={{
             accentColor: "#22D3A5",
             data: [
@@ -155,7 +174,7 @@ export const ExemploCompositions: React.FC = () => {
           width={1080}
           height={1920}
           fps={30}
-          durationInFrames={120}
+          durationInFrames={150}
           defaultProps={{ cta: "Comece hoje", accentColor: "#22D3A5" }}
         />
       </Folder>

@@ -1,3 +1,4 @@
+import { Audio } from "@remotion/media";
 import { Circle } from "@remotion/shapes";
 import {
   AbsoluteFill,
@@ -5,9 +6,11 @@ import {
   Interactive,
   interpolate,
   useCurrentFrame,
+  staticFile,
   useVideoConfig,
 } from "remotion";
 import { SafeArea } from "../../../lib/layout/SafeArea";
+import { Captions } from "../../../lib/media/Captions";
 import { displayFontFamily } from "../../../theme/fonts";
 
 export type IntroProps = {
@@ -109,6 +112,8 @@ export const Intro: React.FC<IntroProps> = ({
           {subtitle}
         </Interactive.P>
       </SafeArea>
+      <Audio name="Narração" src={staticFile("exemplo/voiceover/intro.mp3")} />
+      <Captions src={staticFile("exemplo/voiceover/intro.json")} />
     </AbsoluteFill>
   );
 };

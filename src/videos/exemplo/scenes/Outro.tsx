@@ -1,12 +1,15 @@
+import { Audio } from "@remotion/media";
 import {
   AbsoluteFill,
   Easing,
   Interactive,
   interpolate,
   useCurrentFrame,
+  staticFile,
   useVideoConfig,
 } from "remotion";
 import { SafeArea } from "../../../lib/layout/SafeArea";
+import { Captions } from "../../../lib/media/Captions";
 import { displayFontFamily } from "../../../theme/fonts";
 
 export type OutroProps = {
@@ -90,6 +93,8 @@ export const Outro: React.FC<OutroProps> = ({ cta, accentColor }) => {
           npm run dev
         </Interactive.P>
       </SafeArea>
+      <Audio name="Narração" src={staticFile("exemplo/voiceover/outro.mp3")} />
+      <Captions src={staticFile("exemplo/voiceover/outro.json")} />
     </AbsoluteFill>
   );
 };

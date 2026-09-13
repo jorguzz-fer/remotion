@@ -1,14 +1,17 @@
+import { Audio } from "@remotion/media";
 import {
   AbsoluteFill,
   Easing,
   Interactive,
   interpolate,
   useCurrentFrame,
+  staticFile,
   useVideoConfig,
 } from "remotion";
 import { BarChart } from "../../../lib/charts/BarChart";
 import { Counter } from "../../../lib/charts/Counter";
 import { SafeArea } from "../../../lib/layout/SafeArea";
+import { Captions } from "../../../lib/media/Captions";
 import { useFormat } from "../../../lib/layout/useFormat";
 import { displayFontFamily } from "../../../theme/fonts";
 
@@ -110,6 +113,8 @@ export const Dados: React.FC<DadosProps> = ({ accentColor, data }) => {
           />
         </Interactive.Div>
       </SafeArea>
+      <Audio name="Narração" src={staticFile("exemplo/voiceover/dados.mp3")} />
+      <Captions src={staticFile("exemplo/voiceover/dados.json")} />
     </AbsoluteFill>
   );
 };

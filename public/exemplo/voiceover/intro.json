@@ -1,0 +1,65 @@
+[
+  {
+    "text": "Vídeos",
+    "startMs": 10,
+    "endMs": 530,
+    "timestampMs": 0,
+    "confidence": 0.607674
+  },
+  {
+    "text": " animados",
+    "startMs": 530,
+    "endMs": 1270,
+    "timestampMs": 960,
+    "confidence": 0.91596
+  },
+  {
+    "text": " feitos",
+    "startMs": 1270,
+    "endMs": 1640,
+    "timestampMs": 1560,
+    "confidence": 0.803478
+  },
+  {
+    "text": " em",
+    "startMs": 1640,
+    "endMs": 1790,
+    "timestampMs": 1840,
+    "confidence": 0.958843
+  },
+  {
+    "text": " código,",
+    "startMs": 1790,
+    "endMs": 2720,
+    "timestampMs": 2020,
+    "confidence": 0.425034
+  },
+  {
+    "text": " com",
+    "startMs": 2720,
+    "endMs": 2960,
+    "timestampMs": 2880,
+    "confidence": 0.96224
+  },
+  {
+    "text": " React",
+    "startMs": 2960,
+    "endMs": 3370,
+    "timestampMs": 3300,
+    "confidence": 0.71449
+  },
+  {
+    "text": " e",
+    "startMs": 3370,
+    "endMs": 3450,
+    "timestampMs": 3480,
+    "confidence": 0.980303
+  },
+  {
+    "text": " Remotion",
+    "startMs": 3450,
+    "endMs": 4140,
+    "timestampMs": 3820,
+    "confidence": 0.530911
+  }
+]

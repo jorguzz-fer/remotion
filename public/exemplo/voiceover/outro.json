@@ -1,0 +1,72 @@
+[
+  {
+    "text": "Comece",
+    "startMs": 30,
+    "endMs": 450,
+    "timestampMs": 220,
+    "confidence": 0.302337
+  },
+  {
+    "text": " hoje.",
+    "startMs": 450,
+    "endMs": 1120,
+    "timestampMs": 1000,
+    "confidence": 0.905961
+  },
+  {
+    "text": " Abra",
+    "startMs": 1120,
+    "endMs": 1330,
+    "timestampMs": 1400,
+    "confidence": 0.810957
+  },
+  {
+    "text": " o",
+    "startMs": 1330,
+    "endMs": 1410,
+    "timestampMs": 1720,
+    "confidence": 0.993962
+  },
+  {
+    "text": " Studio",
+    "startMs": 1410,
+    "endMs": 2070,
+    "timestampMs": 2000,
+    "confidence": 0.950033
+  },
+  {
+    "text": " e",
+    "startMs": 2070,
+    "endMs": 2150,
+    "timestampMs": 2380,
+    "confidence": 0.993746
+  },
+  {
+    "text": " edite",
+    "startMs": 2150,
+    "endMs": 2570,
+    "timestampMs": 2540,
+    "confidence": 0.735285
+  },
+  {
+    "text": " a",
+    "startMs": 2570,
+    "endMs": 2650,
+    "timestampMs": 2940,
+    "confidence": 0.997012
+  },
+  {
+    "text": " primeira",
+    "startMs": 2650,
+    "endMs": 3360,
+    "timestampMs": 3300,
+    "confidence": 0.992182
+  },
+  {
+    "text": " cena.",
+    "startMs": 3360,
+    "endMs": 3760,
+    "timestampMs": 3740,
+    "confidence": 0.988546
+  }
+]
