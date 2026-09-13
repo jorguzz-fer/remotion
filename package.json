@@ -1,0 +1,49 @@
+{
+  "name": "videos",
+  "version": "1.0.0",
+  "description": "Kit de vídeos animados em Remotion",
+  "repository": {},
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@remotion/bundler": "4.0.524",
+    "@remotion/captions": "4.0.524",
+    "@remotion/cli": "4.0.524",
+    "@remotion/google-fonts": "4.0.524",
+    "@remotion/install-whisper-cpp": "4.0.524",
+    "@remotion/media": "4.0.524",
+    "@remotion/renderer": "4.0.524",
+    "@remotion/sfx": "4.0.524",
+    "@remotion/shapes": "4.0.524",
+    "@remotion/transitions": "4.0.524",
+    "@remotion/zod-types": "4.0.524",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.524",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.524",
+    "@types/node": "^26.5.1",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "9.19.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render",
+    "still": "remotion still",
+    "lint": "eslint src scripts --no-error-on-unmatched-pattern && tsc",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "smoke": "node scripts/smoke.ts",
+    "new-video": "node scripts/new-video.ts",
+    "voiceover": "node --env-file-if-exists=.env scripts/voiceover.ts",
+    "transcribe": "node scripts/transcribe.ts",
+    "format": "prettier --write src scripts",
+    "skills:update": "remotion skills update",
+    "upgrade": "remotion upgrade"
+  },
+  "type": "module"
+}
