@@ -1,54 +1,17 @@
-# Remotion video
+# videos
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Kit para produzir vídeos animados em código com [Remotion](https://www.remotion.dev) 4.0.524,
+nos formatos vertical (1080x1920), horizontal (1920x1080) e quadrado (1080x1080).
 
-Welcome to your Remotion project!
-
-## Commands
-
-**Install Dependencies**
-
-```console
-npm i
+```bash
+npm install
+npm run dev                               # Remotion Studio em http://localhost:3000
+npm run render -- Exemplo-Vertical        # gera out/Exemplo-Vertical.mp4
+npm run new-video -- meu-video --title "Meu vídeo"
+npm run voiceover -- meu-video            # narração (voz do macOS; ElevenLabs com .env)
+npm run transcribe -- public/meu-video/voiceover   # legendas
+npm run lint && npm test && npm run smoke
 ```
 
-**Start Preview**
-
-```console
-npm run dev
-```
-
-**Render video**
-
-```console
-npx remotion render
-```
-
-**Upgrade Remotion**
-
-```console
-npx remotion upgrade
-```
-
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+Convenções, estrutura e receitas de animação: [AGENTS.md](AGENTS.md).
+Design e plano: `docs/superpowers/`.
