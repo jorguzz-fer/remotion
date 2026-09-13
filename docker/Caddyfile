@@ -1,0 +1,19 @@
+{
+	admin off
+	auto_https off
+}
+
+# Porta pública do container. /healthz fica sem senha para o health check do Coolify;
+# todo o resto exige o Basic Auth definido por STUDIO_USER e STUDIO_PASSWORD (hash gerado no entrypoint).
+:{$PORT:3000} {
+	handle /healthz {
+		respond "ok" 200
+	}
+
+	handle {
+		basic_auth {
+			{$STUDIO_USER} {$STUDIO_PASSWORD_HASH}
+		}
+		reverse_proxy 127.0.0.1:3001
+	}
+}
