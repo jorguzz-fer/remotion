@@ -240,8 +240,9 @@ Expostos no `package.json`:
 
 - Lê `public/<slug>/voiceover/roteiro.json` com o formato
   `{"voice": "Luciana", "scenes": {"intro": "texto...", "dados": "texto..."}}`.
-- Provider `macos` (padrão): roda `say -v <voice> -o temp/<cena>.aiff` e converte para mp3 com
-  `npx remotion ffmpeg`. Sem custo, sem chave, só funciona no macOS.
+- Provider `macos` (padrão): roda `say -v <voice> -o temp/<cena>.wav --file-format=WAVE --data-format=LEI16@22050`
+  e converte para mp3 com o ffmpeg do Remotion (que não lê o AIFF-C padrão do `say`). Sem custo, sem chave,
+  só funciona no macOS.
 - Provider `elevenlabs` (usado automaticamente se `ELEVENLABS_API_KEY` estiver definido e o provider
   não for forçado): chama `POST /v1/text-to-speech/<voiceId>` com `eleven_multilingual_v2` e grava o mp3.
   O `voice` no roteiro passa a ser o voiceId. A chave vem de `.env` via `node --env-file-if-exists=.env`.

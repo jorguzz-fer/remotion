@@ -36,7 +36,7 @@
     "render": "remotion render",
     "still": "remotion still",
     "lint": "eslint src scripts --no-error-on-unmatched-pattern && tsc",
-    "test": "node --test \"src/**/*.test.ts\"",
+    "test": "node --test \"src/**/*.test.ts\" \"scripts/**/*.test.ts\"",
     "smoke": "node scripts/smoke.ts",
     "new-video": "node scripts/new-video.ts",
     "voiceover": "node --env-file-if-exists=.env scripts/voiceover.ts",

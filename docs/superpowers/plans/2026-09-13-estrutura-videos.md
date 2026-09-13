@@ -1987,9 +1987,14 @@ const durationInSeconds = (file: string): number =>
   Number(remotion(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).trim());
 
 const generateMacos = (text: string, out: string) => {
-  const aiff = path.join(tempDir, `${path.basename(out, ".mp3")}.aiff`);
-  execFileSync("say", ["-v", voice, "-o", aiff, text], { stdio: "inherit" });
-  remotion(["ffmpeg", "-y", "-i", aiff, "-codec:a", "libmp3lame", "-q:a", "2", out]);
+  // O say gera AIFF-C comprimido por padrão, que o ffmpeg do Remotion não lê; pedimos WAV PCM.
+  const wav = path.join(tempDir, `${path.basename(out, ".mp3")}.wav`);
+  execFileSync(
+    "say",
+    ["-v", voice, "-o", wav, "--file-format=WAVE", "--data-format=LEI16@22050", text],
+    { stdio: "inherit" },
+  );
+  remotion(["ffmpeg", "-y", "-v", "error", "-i", wav, "-codec:a", "libmp3lame", "-q:a", "2", out]);
 };
 
 const generateElevenLabs = async (text: string, out: string) => {
