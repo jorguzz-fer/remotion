@@ -42,7 +42,7 @@ export const Dados: React.FC<DadosProps> = ({ accentColor, data }) => {
         <Interactive.Div
           name="Texto dos dados"
           style={{
-            flex: 1,
+            flex: isHorizontal ? 1 : "0 0 auto",
             display: "flex",
             flexDirection: "column",
             gap: "0.4em",
@@ -96,7 +96,7 @@ export const Dados: React.FC<DadosProps> = ({ accentColor, data }) => {
         <Interactive.Div
           name="Gráfico"
           style={{
-            flex: 1,
+            flex: isHorizontal ? 1 : "0 0 auto",
             display: "flex",
             justifyContent: "center",
             opacity: interpolate(frame, [0.3 * fps, 0.8 * fps], [0, 1], {
