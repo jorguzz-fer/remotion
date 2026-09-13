@@ -1,9 +1,10 @@
-import { MyComposition } from "./Composition";
+import { ExemploCompositions } from "./videos/exemplo";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <MyComposition />
+      <ExemploCompositions />
+      {/* new-video: registre vídeos acima desta linha */}
     </>
   );
 };
