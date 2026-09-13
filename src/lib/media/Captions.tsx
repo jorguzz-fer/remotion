@@ -32,7 +32,7 @@ export const Captions: React.FC<Props> = ({
   const [missing, setMissing] = useState(false);
   const { delayRender, continueRender, cancelRender } = useDelayRender();
   const [handle] = useState(() => delayRender(`Carregando legendas de ${src}`));
-  const { fps, width } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
 
   const load = useCallback(async () => {
     try {
@@ -124,7 +124,7 @@ export const Captions: React.FC<Props> = ({
               page={page}
               highlightColor={highlightColor}
               position={position}
-              fontSize={Math.round(width * 0.055)}
+              fontSize={Math.round(Math.min(width, height) * 0.055)}
             />
           </Sequence>
         );

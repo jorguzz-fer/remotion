@@ -8,12 +8,19 @@ type Props = {
   children: ReactNode;
   style?: CSSProperties;
   name?: string;
+  captionSpace?: boolean;
 };
 
 // Container de cena: aplica a margem segura e define o fontSize base (1em).
 // Os filhos escrevem tamanhos em "em" e ficam proporcionais em qualquer formato.
-export const SafeArea: React.FC<Props> = ({ children, style, name }) => {
-  const { width } = useVideoConfig();
+// captionSpace reserva os 20% de baixo do quadro para as legendas não cobrirem o conteúdo.
+export const SafeArea: React.FC<Props> = ({
+  children,
+  style,
+  name,
+  captionSpace = false,
+}) => {
+  const { width, height } = useVideoConfig();
   const { paddingX, paddingY, baseFontSize } = getSafeAreaMetrics(width);
 
   return (
@@ -24,7 +31,7 @@ export const SafeArea: React.FC<Props> = ({ children, style, name }) => {
         paddingLeft: paddingX,
         paddingRight: paddingX,
         paddingTop: paddingY,
-        paddingBottom: paddingY,
+        paddingBottom: paddingY + (captionSpace ? Math.round(height * 0.2) : 0),
         fontSize: baseFontSize,
         fontFamily,
         color: colors.text,

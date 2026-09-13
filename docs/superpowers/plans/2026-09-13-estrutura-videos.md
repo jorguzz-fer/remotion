@@ -3324,3 +3324,12 @@ Expected: gerador funciona, lint passa, árvore limpa no fim.
 - [ ] **Step 5: Relatório**
 
 Liste no relatório final: os comandos rodados com resultado, os caminhos dos PNGs e mp4 conferidos, o que ficou fora do escopo (spec §14) e qualquer desvio do spec (por exemplo, troca de mp3 por m4a na Task 7).
+
+---
+
+## Desvios registrados na execução
+
+- Task 1: o `create-video` 4.0.524 injetou Tailwind mesmo com `--no-tailwind`; removido à mão (index.css, `enableTailwind`, dependências). O script `format` ganhou `--no-error-on-unmatched-pattern`.
+- Task 7: o `say` gera AIFF-C, que o ffmpeg do Remotion não lê; o provider macos pede WAV PCM (`--file-format=WAVE --data-format=LEI16@22050`). O downloader do Whisper não retoma parciais; o modelo foi baixado com `curl -C -` e o script só validou o tamanho.
+- Task 8: durações finais Intro 150, Dados 270, Outro 150 (total 540); dois textos de legenda corrigidos ("e-código", "estúdio").
+- Pós-Task 12: `SafeArea` ganhou a prop `captionSpace` (reserva 20% da altura), a fonte das legendas passou a 5,5% do menor lado e o offset inferior a 7% da altura, porque a legenda cobria o gráfico no quadrado e no horizontal. A cena Dados agrupa texto e gráfico fora do horizontal.

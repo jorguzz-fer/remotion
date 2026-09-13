@@ -17,7 +17,7 @@ export const CaptionPage: React.FC<Props> = ({
   fontSize,
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, height } = useVideoConfig();
   const absoluteTimeMs = page.startMs + (frame / fps) * 1000;
 
   return (
@@ -26,7 +26,7 @@ export const CaptionPage: React.FC<Props> = ({
         boxSizing: "border-box",
         justifyContent: position === "bottom" ? "flex-end" : "center",
         alignItems: "center",
-        paddingBottom: position === "bottom" ? "12%" : 0,
+        paddingBottom: position === "bottom" ? Math.round(height * 0.07) : 0,
         paddingLeft: "5%",
         paddingRight: "5%",
       }}

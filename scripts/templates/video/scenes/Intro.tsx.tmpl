@@ -95,6 +95,7 @@ export const Intro: React.FC<IntroProps> = ({ title, subtitle, accentColor }) =>
           import { Captions } from "../../../lib/media/Captions";
           <Audio name="Narração" src={staticFile("__slug__/voiceover/intro.mp3")} />
           <Captions src={staticFile("__slug__/voiceover/intro.json")} />
+        e acrescente a prop captionSpace ao <SafeArea> para a legenda não cobrir o conteúdo.
       */}
     </AbsoluteFill>
   );

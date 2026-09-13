@@ -129,7 +129,8 @@ direção de layout, tamanho de fonte e posição.
 
 `<SafeArea>` é um `AbsoluteFill` com padding proporcional à largura: 80px laterais e 100px
 em cima e embaixo para 1080 de largura, escalados linearmente pela largura real
-(1920 de largura dá 142px e 178px). Aceita `style` para sobrescrever alinhamento e `name` para o Studio.
+(1920 de largura dá 142px e 178px). Aceita `style` para sobrescrever alinhamento, `name` para o Studio e `captionSpace`, que reserva mais 20% da altura
+embaixo para as legendas não cobrirem o conteúdo.
 
 `<SafeArea>` também define `fontSize` igual a 4,1% da largura (44px em 1080, 79px em 1920).
 As cenas escrevem tamanhos de texto em `em`, como literais: `"2em"` para títulos (88px em 1080)
@@ -174,7 +175,7 @@ Comportamento:
   com `watchStaticFile` e recarrega quando o script de transcrição o reescreve.
 - Agrupa com `createTikTokStyleCaptions` e renderiza uma `<Sequence>` por página, com
   `CaptionPage` destacando a palavra falada. `whiteSpace: "pre"` preserva os espaços.
-- Tamanho da fonte padrão: 5,5% da largura da composition, fonte `displayFontFamily`, com `textShadow`
+- Tamanho da fonte padrão: 5,5% do menor lado da composition, fonte `displayFontFamily`, com `textShadow`
   preto em quatro direções para legibilidade sobre qualquer fundo.
 - Arquivo ausente: no Studio, mostra uma faixa vermelha com o caminho esperado, sem quebrar a
   pré-visualização. Durante render (`getRemotionEnvironment().isRendering`), chama `cancelRender`

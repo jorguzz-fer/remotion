@@ -24,6 +24,7 @@ export const Outro: React.FC<OutroProps> = ({ cta, accentColor }) => {
   return (
     <AbsoluteFill name="Outro" style={{ backgroundColor: "#0B1020" }}>
       <SafeArea
+        captionSpace
         style={{
           justifyContent: "center",
           alignItems: "center",

@@ -32,6 +32,7 @@ export const Dados: React.FC<DadosProps> = ({ accentColor, data }) => {
   return (
     <AbsoluteFill name="Dados" style={{ backgroundColor: "#0B1020" }}>
       <SafeArea
+        captionSpace
         style={{
           flexDirection: isHorizontal ? "row" : "column",
           justifyContent: "center",

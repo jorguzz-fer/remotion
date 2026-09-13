@@ -55,6 +55,7 @@ export const Intro: React.FC<IntroProps> = ({
         <Circle radius={width * 0.32} fill={accentColor} />
       </Interactive.Div>
       <SafeArea
+        captionSpace
         style={{
           justifyContent: "center",
           alignItems: "flex-start",

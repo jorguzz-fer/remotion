@@ -224,6 +224,9 @@ import { Captions } from "../../../lib/media/Captions";
 <Captions src={staticFile("meu-video/voiceover/intro.json")} />
 ```
 
+Nas cenas com legenda, passe `captionSpace` ao `<SafeArea>` (`<SafeArea captionSpace style={{...}}>`):
+ele reserva os 20% de baixo do quadro, onde a legenda aparece.
+
 `<Captions>` aceita `switchEveryMs` (padrão 1200; menor = menos palavras por página),
 `highlightColor` (padrão accent) e `position` (`"bottom"` ou `"center"`). Se o JSON não existir,
 o Studio mostra uma faixa vermelha e o render falha de propósito.
