@@ -1,0 +1,14 @@
+node_modules
+out
+build
+renders
+whisper.cpp
+temp
+.git
+.env
+docs
+.agents
+.claude
+.codex
+.cursor
+skills-lock.json
