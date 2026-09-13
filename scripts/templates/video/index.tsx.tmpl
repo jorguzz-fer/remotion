@@ -1,0 +1,100 @@
+import { linearTiming, TransitionSeries } from "@remotion/transitions";
+import { fade } from "@remotion/transitions/fade";
+import { Composition, Folder } from "remotion";
+import type { z } from "zod";
+import { Intro } from "./scenes/Intro";
+import { Outro } from "./scenes/Outro";
+import { __Slug__Schema } from "./schema";
+
+type __Slug__Props = z.infer<typeof __Slug__Schema>;
+
+// Duração total: Intro 120 + Outro 120 = 240 frames, menos uma transição de 15 = 225.
+export const __Slug__: React.FC<__Slug__Props> = ({ title, subtitle, accentColor }) => {
+  return (
+    <TransitionSeries>
+      <TransitionSeries.Sequence name="Intro" durationInFrames={120}>
+        <Intro title={title} subtitle={subtitle} accentColor={accentColor} />
+      </TransitionSeries.Sequence>
+      <TransitionSeries.Transition
+        presentation={fade()}
+        timing={linearTiming({ durationInFrames: 15 })}
+      />
+      <TransitionSeries.Sequence name="Outro" durationInFrames={120}>
+        <Outro accentColor={accentColor} />
+      </TransitionSeries.Sequence>
+    </TransitionSeries>
+  );
+};
+
+export const __Slug__Compositions: React.FC = () => {
+  return (
+    <Folder name="__Slug__">
+      <Composition
+        id="__Slug__-Vertical"
+        component={__Slug__}
+        schema={__Slug__Schema}
+        width={1080}
+        height={1920}
+        fps={30}
+        durationInFrames={225}
+        defaultProps={{
+          title: "__Titulo__",
+          subtitle: "Troque este subtítulo no painel de props.",
+          accentColor: "#22D3A5",
+        }}
+      />
+      <Composition
+        id="__Slug__-Horizontal"
+        component={__Slug__}
+        schema={__Slug__Schema}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={225}
+        defaultProps={{
+          title: "__Titulo__",
+          subtitle: "Troque este subtítulo no painel de props.",
+          accentColor: "#22D3A5",
+        }}
+      />
+      <Composition
+        id="__Slug__-Square"
+        component={__Slug__}
+        schema={__Slug__Schema}
+        width={1080}
+        height={1080}
+        fps={30}
+        durationInFrames={225}
+        defaultProps={{
+          title: "__Titulo__",
+          subtitle: "Troque este subtítulo no painel de props.",
+          accentColor: "#22D3A5",
+        }}
+      />
+      <Folder name="Cenas">
+        <Composition
+          id="__Slug__-Intro"
+          component={Intro}
+          width={1080}
+          height={1920}
+          fps={30}
+          durationInFrames={120}
+          defaultProps={{
+            title: "__Titulo__",
+            subtitle: "Troque este subtítulo no painel de props.",
+            accentColor: "#22D3A5",
+          }}
+        />
+        <Composition
+          id="__Slug__-Outro"
+          component={Outro}
+          width={1080}
+          height={1920}
+          fps={30}
+          durationInFrames={120}
+          defaultProps={{ accentColor: "#22D3A5" }}
+        />
+      </Folder>
+    </Folder>
+  );
+};
