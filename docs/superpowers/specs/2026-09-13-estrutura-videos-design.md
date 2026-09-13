@@ -41,11 +41,12 @@ videos/
 │   └── exemplo/                 # assets do vídeo "exemplo"
 │       └── voiceover/           # roteiro.json, intro/dados/outro.mp3 e os .json de legendas ao lado
 ├── scripts/
-│   ├── new-video.mts            # cria src/videos/<slug>/ e registra no Root.tsx
-│   ├── voiceover.mts            # gera narração (macOS `say` por padrão, ElevenLabs opcional)
-│   ├── transcribe.mts           # Whisper.cpp local -> JSON de legendas
-│   ├── whisper-config.mts       # versão, modelo e idioma do Whisper
-│   ├── smoke.mts                # renderiza um still de cada composition (verificação)
+│   ├── new-video.ts            # cria src/videos/<slug>/ e registra no Root.tsx
+│   ├── voiceover.ts            # gera narração (macOS `say` por padrão, ElevenLabs opcional)
+│   ├── transcribe.ts           # Whisper.cpp local -> JSON de legendas
+│   ├── whisper-config.ts       # versão, modelo e idioma do Whisper
+│   ├── smoke.ts                # renderiza um still de cada composition (verificação)
+│   ├── lib/                     # funções puras dos scripts (slug, template, roteiro...) com testes
 │   └── templates/video/         # esqueleto usado pelo new-video (arquivos .tmpl)
 ├── src/
 │   ├── index.ts                 # registerRoot
@@ -54,14 +55,19 @@ videos/
 │   │   ├── fonts.ts             # Google Fonts carregadas uma vez
 │   │   └── colors.ts            # paleta padrão (defaults da biblioteca)
 │   ├── lib/
-│   │   ├── layout/SafeArea.tsx
+│   │   ├── layout/format.ts          # funções puras (getFormat, getSafeAreaMetrics) + format.test.ts
 │   │   ├── layout/useFormat.ts
+│   │   ├── layout/SafeArea.tsx
+│   │   ├── media/fade-volume.ts      # função pura + teste
 │   │   ├── media/BackgroundMusic.tsx
-│   │   ├── media/Captions.tsx
+│   │   ├── media/caption-pages.ts    # função pura + teste
 │   │   ├── media/CaptionPage.tsx
+│   │   ├── media/Captions.tsx
+│   │   ├── charts/chart-geometry.ts  # funções puras + teste
+│   │   ├── charts/format-number.ts   # função pura + teste
+│   │   ├── charts/Counter.tsx
 │   │   ├── charts/BarChart.tsx
-│   │   ├── charts/LineChart.tsx
-│   │   └── charts/Counter.tsx
+│   │   └── charts/LineChart.tsx
 │   └── videos/
 │       └── exemplo/
 │           ├── index.tsx        # compositions (3 formatos + cenas) e componente principal
@@ -125,8 +131,10 @@ direção de layout, tamanho de fonte e posição.
 em cima e embaixo para 1080 de largura, escalados linearmente pela largura real
 (1920 de largura dá 142px e 178px). Aceita `style` para sobrescrever alinhamento e `name` para o Studio.
 
-Tamanhos mínimos de texto para 1080 de largura, escalados pela largura: título 84px,
-texto de apoio 44px. Para o formato horizontal, os valores são escalados por 1920/1080.
+`<SafeArea>` também define `fontSize` igual a 4,1% da largura (44px em 1080, 79px em 1920).
+As cenas escrevem tamanhos de texto em `em`, como literais: `"2em"` para títulos (88px em 1080)
+e `"1em"` para texto de apoio (44px). Isso cumpre os mínimos de 84px e 44px da skill de layout
+e escala sozinho nos três formatos, sem condicionais no `style`.
 
 ## 6. Tema
 
@@ -151,7 +159,8 @@ Descritos na seção 5.
 Envolve `<Audio>` de `@remotion/media` com loop e fades.
 Props: `src` (obrigatório), `volume` (0 a 1, padrão 0.25), `fadeInSeconds` (padrão 1),
 `fadeOutSeconds` (padrão 2). O fade-out usa `durationInFrames` da composition para terminar no fim.
-Não é usado pelo vídeo de exemplo porque o projeto não tem trilha com licença; fica coberto por lint e tsc.
+Não é usado pelo vídeo de exemplo porque o projeto não tem trilha com licença; fica coberto por lint, tsc
+e pelo teste unitário da curva de volume (`fade-volume.test.ts`).
 
 ### `media/Captions.tsx` e `media/CaptionPage.tsx`
 
@@ -196,7 +205,8 @@ Gráficos e contador não são editáveis no Modo Visual (são dirigidos por dad
 
 ## 8. Scripts
 
-Todos em `scripts/*.mts`, rodados com `node` (Node 26 executa TypeScript sem build).
+Todos em `scripts/*.ts`, rodados com `node` (Node 26 executa TypeScript sem build). O `package.json`
+declara `"type": "module"`, então scripts e testes são ESM e importam módulos locais com a extensão `.ts` explícita.
 Expostos no `package.json`:
 
 | comando | faz |
@@ -205,6 +215,8 @@ Expostos no `package.json`:
 | `npm run render -- <CompId>` | `remotion render`, saída em `out/<CompId>.mp4` |
 | `npm run still -- <CompId>` | `remotion still` |
 | `npm run lint` | `eslint src scripts` e `tsc` |
+| `npm test` | `node --test` nos arquivos `*.test.ts` de `src/` e `scripts/` |
+| `npm run format` | `prettier --write src scripts` |
 | `npm run smoke` | still de todas as compositions em `out/smoke/` |
 | `npm run new-video -- <slug>` | cria um vídeo novo |
 | `npm run voiceover -- <slug>` | gera narração a partir do roteiro |
@@ -212,7 +224,7 @@ Expostos no `package.json`:
 | `npm run skills:update` | `remotion skills update` |
 | `npm run upgrade` | `remotion upgrade` |
 
-### `new-video.mts <slug>`
+### `new-video.ts <slug>`
 
 - Valida o slug (kebab-case, só letras minúsculas, números e hífens). Recusa se `src/videos/<slug>` existir.
 - Copia `scripts/templates/video/*.tmpl` substituindo `__slug__` (kebab), `__Slug__` (PascalCase) e
@@ -224,7 +236,7 @@ Expostos no `package.json`:
   para inserir manualmente e sai com código 0.
 - Termina imprimindo a URL do Studio para a composition vertical do vídeo novo.
 
-### `voiceover.mts <slug> [--provider macos|elevenlabs] [--voice <nome>]`
+### `voiceover.ts <slug> [--provider macos|elevenlabs] [--voice <nome>]`
 
 - Lê `public/<slug>/voiceover/roteiro.json` com o formato
   `{"voice": "Luciana", "scenes": {"intro": "texto...", "dados": "texto..."}}`.
@@ -237,22 +249,22 @@ Expostos no `package.json`:
 - Imprime a duração em segundos e em frames (a 30 fps) de cada mp3 gerado, lida com
   `npx remotion ffprobe`, para ajustar `durationInFrames` das cenas.
 
-### `transcribe.mts <arquivo ou pasta...> [--force]`
+### `transcribe.ts <arquivo ou pasta...> [--force]`
 
 - Aceita `.mp3`, `.wav`, `.m4a`, `.mp4`, `.mov`, `.webm`, `.mkv`, dentro de `public/`. Pastas são
   percorridas recursivamente.
 - Pula arquivos que já têm `.json` ao lado, a menos que `--force`.
 - Instala Whisper.cpp em `./whisper.cpp` (gitignored) e baixa o modelo na primeira execução.
 - Converte para wav 16 kHz em `temp/` com `npx remotion ffmpeg`, roda `transcribe()` com
-  `language` e `model` do `whisper-config.mts`, `tokenLevelTimestamps: true`, `splitOnWord: true`,
+  `language` e `model` do `whisper-config.ts`, `tokenLevelTimestamps: true`, `splitOnWord: true`,
   aplica `toCaptions()` e grava `<mesmo nome>.json` ao lado do arquivo de origem. Apaga `temp/` ao final.
-- `whisper-config.mts`: `WHISPER_VERSION = "1.6.0"`, `WHISPER_MODEL = "medium"` (multilíngue, 1,5 GB),
+- `whisper-config.ts`: `WHISPER_VERSION = "1.6.0"`, `WHISPER_MODEL = "medium"` (multilíngue, 1,5 GB),
   `WHISPER_LANG = "pt"`. A 1.6.0 é a versão do template oficial e compila só com `git` e `make`,
   que existem nesta máquina. Versões 1.7.4 ou mais novas exigem `cmake`, que não está instalado.
   O comentário do arquivo lista as alternativas: `small` para testes rápidos, e `large-v3-turbo`
   para mais qualidade, que exige Whisper.cpp 1.7.2 ou mais novo.
 
-### `smoke.mts`
+### `smoke.ts`
 
 Usa `@remotion/bundler` e `@remotion/renderer`: faz o bundle uma vez, lista as compositions com
 `getCompositions` e renderiza o frame do meio de cada uma em `out/smoke/<id>.png` com `scale: 0.25`.
@@ -278,8 +290,9 @@ Serve de referência viva das convenções e de teste da estrutura.
     (editáveis no painel de props do Studio), `<Counter>` com a soma deles. Narração `dados.mp3`.
   - `Outro`: chamada para ação com um "botão" `Interactive.Div` que entra por spring, texto de apoio.
     Narração `outro.mp3`.
-  - Um `whoosh` de `@remotion/sfx` (`https://remotion.media/whoosh.wav`) em cada transição,
-    posicionado com `<Sequence from={...}>` na composição principal.
+  - Um whoosh em cada transição: a URL `whoosh` exportada por `@remotion/sfx`
+    (`https://remotion.media/whoosh.wav`), tocada com `<Audio>` de `@remotion/media` usando
+    `from` e `durationInFrames` na composição principal.
 - Layout por formato: no vertical, título e gráfico empilham; no horizontal, ficam lado a lado;
   no quadrado, empilham com fontes menores. Decidido via `useFormat()`.
 - Narração gerada com `npm run voiceover -- exemplo` (voz Luciana, provider macos) e legendas com
@@ -311,8 +324,10 @@ Serve de referência viva das convenções e de teste da estrutura.
   `@remotion/transitions`, `@remotion/google-fonts`, `@remotion/media`, `@remotion/captions`,
   `@remotion/shapes`, `@remotion/sfx`, `@remotion/zod-types`, `@remotion/bundler`, `@remotion/renderer`;
   `zod`; dev: `@remotion/install-whisper-cpp`, `@remotion/eslint-config-flat`, `eslint`, `prettier`,
-  `typescript`, `@types/react`, `@types/web`. `react` e `react-dom` nas versões do scaffold.
-- `tsconfig.json` do scaffold, com `scripts` incluído na checagem (`include: ["src", "scripts"]`)
+  `typescript`, `@types/react`, `@types/web`, `@types/node`. `react` e `react-dom` nas versões do scaffold.
+- `package.json` com `"type": "module"` e os scripts da seção 8.
+- `tsconfig.json` do scaffold, com `target` e `lib` em ES2022, `allowImportingTsExtensions: true`
+  (para os testes importarem `./x.ts`), `scripts` incluído na checagem (`include: ["src", "scripts"]`)
   e `scripts/templates` excluído.
 - `remotion.config.ts` do scaffold: rspack ativo, `jpeg`, sobrescrever saída.
 - `.env.example` com `ELEVENLABS_API_KEY=`.
@@ -343,6 +358,8 @@ Serve de referência viva das convenções e de teste da estrutura.
 6. O Studio abre com `npx remotion studio --no-open` e a composition `Exemplo-Vertical` é inspecionada
    no navegador da própria sessão.
 7. Voz e legendas do exemplo foram geradas pelos próprios scripts do projeto, não à mão.
+8. `npm test` passa: as funções puras de layout, gráficos, legendas e scripts têm testes unitários
+   (`node --test`, sem dependência extra).
 
 ## 14. Fora de escopo
 
