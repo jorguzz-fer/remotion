@@ -12,3 +12,5 @@ whisper.cpp/
 temp/
 .env
 .DS_Store
+build/
+renders/
